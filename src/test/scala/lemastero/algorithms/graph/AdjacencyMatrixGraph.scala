@@ -13,9 +13,8 @@ class AdjacencyMatrixGraph(val numberOfVertices:Int) extends Graph {
   val adjacent = new Array[Array[Boolean]](numberOfVertices)
   for(index <- 0 to numberOfVertices - 1) {
     adjacent(index) = new Array[Boolean](numberOfVertices)
-    for(index2 <- 0 to numberOfVertices - 1) {
+    for(index2 <- adjacent(index).indices)
       adjacent(index)(index2) = false
-    }
   }
 
   override def addEdgeBetween(firstVertex: Int, secondVertex: Int): Unit = {
@@ -25,7 +24,7 @@ class AdjacencyMatrixGraph(val numberOfVertices:Int) extends Graph {
 
   override def adjacentVertices(vertex: Int): mutable.ListBuffer[Int] = {
     val result = mutable.ListBuffer[Int]()
-    for(index2 <- 0 to numberOfVertices - 1) {
+    for(index2 <- adjacent(vertex).indices) {
       if (adjacent(vertex)(index2) && !result.contains(index2)) {
         result += index2
       }
@@ -35,8 +34,8 @@ class AdjacencyMatrixGraph(val numberOfVertices:Int) extends Graph {
 
   override def numberOfEdges: Int = {
     var result = 0
-    for(index <- 0 to numberOfVertices - 1) {
-      for(index2 <- 0 to numberOfVertices - 1) {
+    for(index <- adjacent.indices) {
+      for(index2 <- adjacent(index).indices) {
         if (adjacent(index)(index2)) {
           result += 1
         }
@@ -47,9 +46,9 @@ class AdjacencyMatrixGraph(val numberOfVertices:Int) extends Graph {
 
   override def toString: String = {
     val buffer = new java.lang.StringBuilder
-    for(index <- 0 to numberOfVertices - 1) {
+    for(index <- adjacent.indices) {
       buffer.append("Edges for ").append(index).append(": ")
-      for(index2 <- 0 to numberOfVertices - 1) {
+      for(index2 <- adjacent(index).indices) {
         if(adjacent(index)(index2))
           buffer.append(index2).append(" ")
       }
