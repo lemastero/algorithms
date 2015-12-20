@@ -7,20 +7,21 @@ object AdjacencyMatrixGraph {
   type VertexEdges = Array[Boolean]
   type VerticesEdges = List[VertexEdges]
 
-  def noEdges(count:Int): VerticesEdges =
-    List.fill(count)(new VertexEdges(count))
+  def verticesNoEdges(size:Int): VerticesEdges =
+    List.fill(size)( vertexNoEdges(size) )
 
+  private def vertexNoEdges(size: Int): VertexEdges =
+    new VertexEdges(size)
 }
 
 /**
-  * This is ineficient implementation of Graph that uses
-  * matrix that holds connection between each vertices.
+  * Implementation of Graph using matrix with vertices edges
   *
-  * It is simple but is very space consuming square(number of vertices)
+  * It is simple but not efficient. Space cost is square(number of vertices).
   */
 class AdjacencyMatrixGraph(val numberOfVertices:Int) extends Graph {
 
-  val adjacent = noEdges(numberOfVertices)
+  val adjacent:VerticesEdges = verticesNoEdges(numberOfVertices)
 
   override def addEdgeBetween(firstVertex: Int, secondVertex: Int): Unit = {
     adjacent(firstVertex)(secondVertex) = true
