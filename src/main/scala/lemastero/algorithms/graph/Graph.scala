@@ -1,12 +1,10 @@
 package lemastero.algorithms.graph
 
-import scala.collection.mutable
-
 trait Graph {
 
   def addEdgeBetween(firstVertex:Int, secondVertex:Int): Unit
 
-  def adjacentVertices(vertex:Int): mutable.ListBuffer[Int]
+  def adjacentVertices(vertex:Int): List[Int]
 
   def numberOfVertices: Int
 
