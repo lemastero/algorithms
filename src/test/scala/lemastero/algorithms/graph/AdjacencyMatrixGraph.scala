@@ -30,7 +30,7 @@ class AdjacencyMatrixGraph(val numberOfVertices:Int) extends Graph {
         result += index2
       }
     }
-    return result
+    result
   }
 
   override def numberOfEdges: Int = {
@@ -42,7 +42,7 @@ class AdjacencyMatrixGraph(val numberOfVertices:Int) extends Graph {
         }
       }
     }
-    return result/2
+    result/2
   }
 
   override def toString: String = {
