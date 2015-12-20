@@ -30,19 +30,19 @@ class AdjacencyMatrixGraph(val numberOfVertices:Int) extends Graph {
         result += index2
       }
     }
-    return result;
+    return result
   }
 
   override def numberOfEdges: Int = {
-    var result = 0;
+    var result = 0
     for(index <- 0 to numberOfVertices - 1) {
       for(index2 <- 0 to numberOfVertices - 1) {
         if (adjacent(index)(index2)) {
-          result += 1;
+          result += 1
         }
       }
     }
-    return result/2;
+    return result/2
   }
 
   override def toString: String = {
