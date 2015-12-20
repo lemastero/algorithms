@@ -1,6 +1,17 @@
 package lemastero.algorithms.graph
 
 import scala.collection.mutable
+import lemastero.algorithms.graph.AdjacencyMatrixGraph._
+
+object AdjacencyMatrixGraph {
+
+  type VertexEdges = Array[Boolean]
+  type VerticesEdges = Array[VertexEdges]
+
+  def noEdges(count:Int): VerticesEdges =
+    Array.fill(count)(new VertexEdges(count))
+
+}
 
 /**
   * This is ineficient implementation of Graph that uses
@@ -10,12 +21,7 @@ import scala.collection.mutable
   */
 class AdjacencyMatrixGraph(val numberOfVertices:Int) extends Graph {
 
-  val adjacent = new Array[Array[Boolean]](numberOfVertices)
-  for(index <- 0 to numberOfVertices - 1) {
-    adjacent(index) = new Array[Boolean](numberOfVertices)
-    for(index2 <- adjacent(index).indices)
-      adjacent(index)(index2) = false
-  }
+  val adjacent = noEdges(numberOfVertices)
 
   override def addEdgeBetween(firstVertex: Int, secondVertex: Int): Unit = {
     adjacent(firstVertex)(secondVertex) = true
@@ -32,17 +38,11 @@ class AdjacencyMatrixGraph(val numberOfVertices:Int) extends Graph {
     result
   }
 
-  override def numberOfEdges: Int = {
-    var result = 0
-    for(index <- adjacent.indices) {
-      for(index2 <- adjacent(index).indices) {
-        if (adjacent(index)(index2)) {
-          result += 1
-        }
-      }
-    }
-    result/2
-  }
+  override def numberOfEdges: Int =
+    adjacent.map( countEdges ).sum / 2
+
+  private def countEdges(edges:VertexEdges): Int =
+    edges.count(_ == true)
 
   override def toString: String = {
     val buffer = new java.lang.StringBuilder
