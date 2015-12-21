@@ -1,84 +1,73 @@
 package lemastero.algorithms.trie
 
+import lemastero.algorithms.trie.PathHolder.Path
+
 /**
-  * Implemented R-way Trie
-  * in Scala
+  * R-way Trie
+  *
+  * Implementation based on:
   * https://class.coursera.org/algs4partII-006/lecture/34
   */
-private class CrossRoads[Value >: Null] {
+private class TrieNode[Value >: Null] {
 
-  val NumberOfPathsStartingFromCrossRoad:Int = 256; // TODO printable ASCII is between 32 and 126
-  // https://en.wikipedia.org/wiki/ASCII#ASCII_printable_characters
+  val NumberOfChildren:Int = 256 // TODO printable ASCII is between 32 and 126
 
-  private[trie] var signValue:Value = null;
-  private[trie] var roads:Array[CrossRoads[Value]] = new Array[CrossRoads[Value]](NumberOfPathsStartingFromCrossRoad);
+  private[trie] var value:Value = null
+  private[trie] val children:Array[TrieNode[Value]] =
+    new Array[TrieNode[Value]](NumberOfChildren)
 
-  override def toString():String = {
-    var result:StringBuilder = new StringBuilder("(")
-      .append(signValue).append(": ");
-    for(i <- 0 to roads.length - 1)
-      if(roads(i) != null)
-        result.append(i.toChar).append(": ").append(roads(i).toString()).append(", ")
-    result.append(")")
-    return result.toString()
+  override def toString:String = {
+    val result = new StringBuilder("(")
+      .append(value).append(" [")
+
+    for(i <- children.indices)
+      if(children(i) != null)
+        result.append(i.toChar).append(": ").append(children(i)).append(", ")
+    result.append("])")
+    result.toString()
   }
 }
 
+
+
 class RWayTrie[Value >: Null] extends StringSymbolTable[Value] {
 
-  private var startOfPath:CrossRoads[Value] = new CrossRoads[Value]();
+  private[trie] var root:TrieNode[Value] = new TrieNode[Value]()
 
-  override def put(key:String, value:Value):Unit = {
-    startOfPath = putSignAtTheEndOfPath(startOfPath, key, value, 0);
-  }
+  override def put(stringPath:String, newValue:Value):Unit = {
+    def putValue(currentChild: TrieNode[Value], currentIndex: Int): TrieNode[Value] = {
+      var currentChildToVisit = currentChild
+      if(currentChild == null)
+        currentChildToVisit = new TrieNode[Value]()
 
-  private def putSignAtTheEndOfPath(currentStage:CrossRoads[Value], fullPath:String, signToSet:Value, stageMark:Int): CrossRoads[Value] = {
-    var currentStageToVisit = currentStage;
-    if(currentStage == null)
-      currentStageToVisit = new CrossRoads();
+      if( stringPath.isEnd(currentIndex) ) {
+        currentChildToVisit.value = newValue
+        return currentChildToVisit
+      }
 
-    if(isEndOfPath(fullPath, stageMark)) {
-      currentStageToVisit.signValue = signToSet;
-      return currentStageToVisit;
+      val index = stringPath.pick(currentIndex)
+      currentChildToVisit.children(index) = putValue(currentChildToVisit.children(index), currentIndex+1)
+      currentChildToVisit
     }
 
-    var c:Char = pickRoad(fullPath, stageMark);
-    currentStageToVisit.roads(c) = putSignAtTheEndOfPath(currentStageToVisit.roads(c), fullPath, signToSet, stageMark+1);
-    return currentStageToVisit;
+    root = putValue(root, 0) // TODO removing left side of assignment do not break tests
   }
 
-  override def get(key:String):Value = {
-    var x:CrossRoads[Value] = findNodeByKeyFromPath(startOfPath, key, 0);
-    if(x == null) return null;
-    return x.signValue
-  }
+  override def get(key:String): Value = {
 
-  val noResults = null
-  private def findNodeByKeyFromPath(path:CrossRoads[Value], key:String, nextStep:Int):CrossRoads[Value] = {
-    if(path == null) {
-      return noResults
-    };
+    def getNode(currentChild:TrieNode[Value], step:Int):TrieNode[Value] =
+      if(currentChild == null)
+        null
+      else if( key.isEnd(step) )
+        currentChild
+      else
+        getNode(currentChild.children(key.pick(step)), step + 1)
 
-    if(isEndOfPath(key, nextStep)) {
-      return path
-    };
-
-    var c:Char = pickRoad(key, nextStep);
-    return findNodeByKeyFromPath(path.roads(c), key, nextStep+1);
-  }
-
-  def pickRoad(key: String, nextStep: Int): Char = {
-    key.charAt(nextStep)
-  }
-
-  private def isEndOfPath(key: String, nextStep: Int): Boolean = {
-    nextStep == key.length
+    val foundNode:TrieNode[Value] = getNode(root, 0)
+    if(foundNode == null) return null
+    foundNode.value
   }
 
   // TODO implement delete
-
-  override def toString():String = {
-    "Trie: " + startOfPath.toString()
-  }
 
 }
