@@ -63,7 +63,7 @@ class RWayTrie[Value >: Null] extends StringSymbolTable[Value] {
       else
         getNode(currentChild.children(key.pick(step)), step + 1)
 
-    val foundNode:TrieNode[Value] = getNode(root, 0)
+    val foundNode = getNode(root, 0)
     if(foundNode == null) return null
     foundNode.value
   }
