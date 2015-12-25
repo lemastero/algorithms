@@ -14,7 +14,7 @@ class RWayTrieSpec extends BaseSpec {
 
     it("does not find any values") {
       val trie = new RWayTrie[Integer]()
-      trie.get("foo") mustBe null
+      trie.get("foo") mustBe None
     }
   }
 
@@ -81,18 +81,18 @@ class RWayTrieSpec extends BaseSpec {
     it("returns stored previously value") {
       val trie = new RWayTrie[Integer]()
       trie.put("sea", 42)
-      trie.get("sea") mustBe 42
+      trie.get("sea") mustBe Some(42)
     }
 
     it("does not return values that were not stored") {
       val trie = new RWayTrie[Integer]()
       trie.put("foobar", 42)
 
-      trie.get("fooba") mustBe null
-      trie.get("foob") mustBe null
-      trie.get("oobar") mustBe null
-      trie.get("foobaR") mustBe null
-      trie.get("Foobar") mustBe null
+      trie.get("fooba") mustBe None
+      trie.get("foob") mustBe None
+      trie.get("oobar") mustBe None
+      trie.get("foobaR") mustBe None
+      trie.get("Foobar") mustBe None
     }
   }
 
