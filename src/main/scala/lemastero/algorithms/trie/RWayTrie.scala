@@ -28,8 +28,6 @@ private class TrieNode[Value >: Null] {
   }
 }
 
-
-
 class RWayTrie[Value >: Null] extends StringSymbolTable[Value] {
 
   private[trie] var root:TrieNode[Value] = new TrieNode[Value]()
@@ -50,22 +48,22 @@ class RWayTrie[Value >: Null] extends StringSymbolTable[Value] {
       currentChildToVisit
     }
 
-    root = putValue(root, 0) // TODO removing left side of assignment do not break tests
+    root = putValue(root, 0)
   }
 
-  override def get(key:String): Value = {
+  override def get(key:String): Option[Value] = {
 
-    def getNode(currentChild:TrieNode[Value], step:Int):TrieNode[Value] =
+    def getNode(currentChild:TrieNode[Value], step:Int): Option[TrieNode[Value]] =
       if(currentChild == null)
-        null
+        None
       else if( key.isEnd(step) )
-        currentChild
+        Some(currentChild)
       else
         getNode(currentChild.children(key.pick(step)), step + 1)
 
-    val foundNode:TrieNode[Value] = getNode(root, 0)
-    if(foundNode == null) return null
-    foundNode.value
+    val foundNode = getNode(root, 0)
+    if(foundNode.isEmpty) return None
+    Option(foundNode.get.value)
   }
 
   // TODO implement delete
