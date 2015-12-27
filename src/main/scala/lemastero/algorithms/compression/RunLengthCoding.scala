@@ -4,6 +4,18 @@ import scala.collection.mutable
 
 class RunLengthCoding {
 
+  def decompress(ints: Iterator[Int]):List[Int] = {
+    val result = mutable.ListBuffer[Int]()
+    var value = 1
+    while(ints.hasNext) {
+      for(i <- 1 to ints.next())
+        result.append(value)
+      value = if(value == 1) 0 else 1
+    }
+    result.toList
+  }
+
+
   def compress(uncompressed:Iterator[Int]): List[Int]  = {
     val result = mutable.ListBuffer[Int]()
     if(uncompressed.isEmpty) return result.toList
