@@ -88,7 +88,7 @@ class DepthFirstSearchSpec extends FunSpec with MustMatchers {
 
   }
 
-  describe("DepthFirstSearch for 3 element graph") {
+  describe("DepthFirstSearch for complex graph") {
 
     it("existsPathTo returns true when there is obvious edge between 3 elements") {
       val graph = AdjacencyListGraph(3)
@@ -98,6 +98,75 @@ class DepthFirstSearchSpec extends FunSpec with MustMatchers {
       path.existsPathTo(2) mustBe true
     }
 
+    it("getPathTo returns true when there is obvious edge between 3 elements") {
+      val graph = AdjacencyListGraph(3)
+      graph.addEdgeBetween(0,1)
+      graph.addEdgeBetween(1,2)
+      val path = DepthFirstSearch(graph: Graph, 0)
+      path.getPathTo(2) mustBe List(0, 1, 2)
+    }
+
+    it("getPathTo returns proper path when there is edge between 3 elements") {
+      val graph = AdjacencyListGraph(3)
+      graph.addEdgeBetween(1, 2)
+      graph.addEdgeBetween(1, 0)
+      val path = DepthFirstSearch(graph: Graph, 0)
+      path.getPathTo(2) mustBe List(0, 1, 2)
+    }
+
+    it("getPathTo returns empty list when no edge between given object and root") {
+      val graph = AdjacencyListGraph(3)
+      graph.addEdgeBetween(1,2)
+      val path = DepthFirstSearch(graph: Graph, 0)
+      path.getPathTo(2) mustBe List[Int]()
+    }
+
+    it("getPathTo properly recognize complex graph") {
+      val graph = AdjacencyListGraph(13)
+      graph.addEdgeBetween(0,6)
+      graph.addEdgeBetween(0,2)
+      graph.addEdgeBetween(0,1)
+      graph.addEdgeBetween(0,5)
+
+      graph.addEdgeBetween(6,4)
+      graph.addEdgeBetween(4,3)
+      graph.addEdgeBetween(4,5)
+
+      graph.addEdgeBetween(3,5)
+
+      graph.addEdgeBetween(7,8)
+
+      graph.addEdgeBetween(9,10)
+      graph.addEdgeBetween(9,12)
+      graph.addEdgeBetween(9,11)
+
+      graph.addEdgeBetween(11,12)
+      val path = DepthFirstSearch(graph: Graph, 0)
+
+      path.existsPathTo(6) mustBe true
+      path.existsPathTo(2) mustBe true
+      path.existsPathTo(1) mustBe true
+      path.existsPathTo(4) mustBe true
+      path.existsPathTo(3) mustBe true
+      path.existsPathTo(5) mustBe true
+
+      path.existsPathTo(7) mustBe false
+      path.existsPathTo(8) mustBe false
+      path.existsPathTo(9) mustBe false
+      path.existsPathTo(10) mustBe false
+      path.existsPathTo(11) mustBe false
+      path.existsPathTo(12) mustBe false
+
+      path.getPathTo(6) mustBe List[Int](0, 6)
+      path.getPathTo(1) mustBe List[Int](0, 1)
+      path.getPathTo(2) mustBe List[Int](0, 2)
+      path.getPathTo(4) mustBe List[Int](0, 6, 4)
+      path.getPathTo(3) mustBe List[Int](0, 6, 4, 3)
+    }
+
   }
 
 }
+
+
+

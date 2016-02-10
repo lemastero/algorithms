@@ -34,11 +34,11 @@ case class DepthFirstSearch(graph: Graph, root:Int) extends PathFinder {
 
   override def getPathTo(destination: Int): List[Int] =
     if (destination >= graph.numberOfVertices) throw new VertexNotFound
-    else if (previousVertex(destination).isDefined) createPathFor(destination)
+    else if (previousVertex(destination).isDefined) createPathFor(destination, List[Int]())
     else List()
 
-  private def createPathFor(destination: Int): List[Int] =
-    if (destination == root) List(root)
-    else root :: List(destination)
+  private def createPathFor(destination: Int, soFar:List[Int]): List[Int] =
+    if (destination == root) root :: soFar
+    else createPathFor(previousVertex(destination).get, destination :: soFar)
 
 }
