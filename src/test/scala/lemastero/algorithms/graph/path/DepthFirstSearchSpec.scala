@@ -7,11 +7,17 @@ class DepthFirstSearchSpec extends FunSpec with MustMatchers {
 
   describe("DepthFirstSearch") {
 
-    it("can be build from graph") {
+    it("throws PathFromEmptyGraph exception when try to construct from empty Graph") {
       val graph = AdjacencyListGraph(0)
       intercept[PathFromEmptyGraph] {
         DepthFirstSearch(graph: Graph, 42)
       }
+    }
+
+    it("recognize path from single element graph") {
+      val graph = AdjacencyListGraph(1)
+      val path = DepthFirstSearch(graph: Graph, 0)
+      path.existsPathTo(0) mustBe true
     }
   }
 

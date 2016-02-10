@@ -6,7 +6,7 @@ package lemastero.algorithms.graph.path
   */
 trait PathFinder {
 
-  def existsPathTo(destination:Int)
+  def existsPathTo(destination:Int):Boolean
 
   def getPathTo(destination:Int):List[Integer]
 
