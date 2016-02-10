@@ -13,12 +13,22 @@ class DepthFirstSearchSpec extends FunSpec with MustMatchers {
         DepthFirstSearch(graph: Graph, 42)
       }
     }
+  }
 
-    it("recognize path from single element graph") {
+  describe("DepthFirstSearch for single element graph") {
+
+    it("exists path from root element") {
       val graph = AdjacencyListGraph(1)
       val path = DepthFirstSearch(graph: Graph, 0)
       path.existsPathTo(0) mustBe true
     }
+
+    it("path from root element to itself consist of one step") {
+      val graph = AdjacencyListGraph(1)
+      val path = DepthFirstSearch(graph: Graph, 0)
+      path.getPathTo(0) mustBe List(0)
+    }
+
   }
 
 }

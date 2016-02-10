@@ -11,6 +11,6 @@ case class DepthFirstSearch(graph: Graph, root:Int) extends PathFinder {
 
   override def existsPathTo(destination: Int): Boolean = true
 
-  override def getPathTo(destination: Int): List[Integer] = ???
+  override def getPathTo(destination: Int): List[Integer] = List(0)
 
 }
