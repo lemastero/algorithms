@@ -11,7 +11,8 @@ case class AdjacencyListGraph(numberOfVertices:Int) extends Graph {
     adjacents(secondVertex) += firstVertex
   }
 
-  override def adjacentVertices(vertex: Int): List[Int] = ???
+  override def adjacentVertices(vertex: Int): List[Int] =
+    adjacents(vertex).toList
 
   override def numberOfEdges: Int =
     adjacents.map(e => e.size).sum / 2
