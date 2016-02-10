@@ -9,15 +9,24 @@ import lemastero.algorithms.graph.path.PathFinder.{VertexNotFound, PathFromNotEx
 case class DepthFirstSearch(graph: Graph, root:Int) extends PathFinder {
 
   private val previousVertex:Array[Option[Int]] = Array.fill[Option[Int]](graph.numberOfVertices)(None)
+  private val visitedVertices:Array[Boolean] = Array.fill[Boolean](graph.numberOfVertices)(false)
 
   if(graph.numberOfVertices == 0) throw new PathFinder.PathFromEmptyGraph
   if(root >= graph.numberOfVertices) throw new PathFromNotExistingVertex
 
   previousVertex(root) = Some(root)
-  graph.adjacentVertices(root).foreach(preprocessDfs)
+  preprocessDfs(root)
 
-  private def preprocessDfs(each: Int): Unit =
-    previousVertex(each) = Some(root)
+  private def preprocessDfs(previous:Int): Unit = {
+    visitedVertices(previous) = true
+    graph
+      .adjacentVertices(previous)
+      .filter( adjacent => ! visitedVertices(adjacent))
+      .foreach( notVisited => {
+        previousVertex(notVisited) = Some(previous)
+        preprocessDfs(notVisited)
+      })
+  }
 
   override def existsPathTo(destination: Int): Boolean =
     if (destination >= graph.numberOfVertices) throw new VertexNotFound
@@ -28,7 +37,7 @@ case class DepthFirstSearch(graph: Graph, root:Int) extends PathFinder {
     else if (previousVertex(destination).isDefined) createPathFor(destination)
     else List()
 
-  private def createPathFor(destination: Int): scala.List[Int] =
+  private def createPathFor(destination: Int): List[Int] =
     if (destination == root) List(root)
     else root :: List(destination)
 

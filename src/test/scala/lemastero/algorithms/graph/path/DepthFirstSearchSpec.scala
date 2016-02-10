@@ -64,7 +64,7 @@ class DepthFirstSearchSpec extends FunSpec with MustMatchers {
 
   }
 
-  describe("DepthFirstSearch for two element graph") {
+  describe("DepthFirstSearch for 2 element graph") {
 
     it("getPathTo returns empty list when given element is not connected") {
       val graph = AdjacencyListGraph(2)
@@ -84,6 +84,18 @@ class DepthFirstSearchSpec extends FunSpec with MustMatchers {
       val graph = AdjacencyListGraph(2)
       val path = DepthFirstSearch(graph: Graph, 0)
       path.existsPathTo(1) mustBe false
+    }
+
+  }
+
+  describe("DepthFirstSearch for 3 element graph") {
+
+    it("existsPathTo returns true when there is obvious edge between 3 elements") {
+      val graph = AdjacencyListGraph(3)
+      graph.addEdgeBetween(0,1)
+      graph.addEdgeBetween(1,2)
+      val path = DepthFirstSearch(graph: Graph, 0)
+      path.existsPathTo(2) mustBe true
     }
 
   }
