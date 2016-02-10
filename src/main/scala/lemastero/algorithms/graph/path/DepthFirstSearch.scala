@@ -16,18 +16,20 @@ case class DepthFirstSearch(graph: Graph, root:Int) extends PathFinder {
   previousVertex(root) = Some(root)
   graph.adjacentVertices(root).foreach(preprocessDfs)
 
-  private def preprocessDfs(each: Int): Unit = {
+  private def preprocessDfs(each: Int): Unit =
     previousVertex(each) = Some(root)
-  }
 
   override def existsPathTo(destination: Int): Boolean =
     if (destination >= graph.numberOfVertices) throw new VertexNotFound
-    else true
+    else previousVertex(destination).isDefined
 
   override def getPathTo(destination: Int): List[Int] =
     if (destination >= graph.numberOfVertices) throw new VertexNotFound
-    else if (previousVertex(destination).isEmpty) List()
-    else if (destination == root) List(root)
+    else if (previousVertex(destination).isDefined) createPathFor(destination)
+    else List()
+
+  private def createPathFor(destination: Int): scala.List[Int] =
+    if (destination == root) List(root)
     else root :: List(destination)
 
 }
