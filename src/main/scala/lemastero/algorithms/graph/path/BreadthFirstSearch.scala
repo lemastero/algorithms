@@ -2,7 +2,12 @@ package lemastero.algorithms.graph.path
 
 import lemastero.algorithms.graph.Graph
 
-/** Breadth First Search (BFS) algorithm.  */
+/**
+  * Breadth First Search (BFS) algorithm.
+  *
+  * Breadth First Search differs from Depth First Search by
+  * using queue to enforce processing siblings before children.
+  */
 case class BreadthFirstSearch(graph: Graph, root:Int) extends PathFinder {
 
   private val previousVertex: Array[Option[Int]] =
