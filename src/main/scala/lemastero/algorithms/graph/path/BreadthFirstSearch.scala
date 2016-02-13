@@ -18,8 +18,7 @@ case class BreadthFirstSearch(graph: Graph, root:Int) extends PathFinder {
 
   if(graph.numberOfVertices == 0) throw new PathFromEmptyGraph
   if(root >= graph.numberOfVertices) throw new PathFromNotExistingVertex
-
-  initialize
+  initialize()
 
   override def existsPathTo(destination: Int): Boolean =
     if (destination >= graph.numberOfVertices) throw new VertexNotFound
@@ -34,19 +33,16 @@ case class BreadthFirstSearch(graph: Graph, root:Int) extends PathFinder {
     if (destination == root) root :: soFar
     else createPathFor(previousVertex(destination).get, destination :: soFar)
 
-  private def initialize = {
+  private def initialize() {
     previousVertex(root) = Some(root)
-    markPrevious(root)
-    this
+    markPreviousVertices(List(root))
   }
 
-  private def markPrevious(previous:Int): Unit =
-    graph
-      .adjacentVertices(previous)
-      .filterNot( existsPathTo )
-      .foreach( notVisited => {
-        previousVertex(notVisited) = Some(previous)
-        markPrevious(notVisited)
-      })
-
+  private def markPreviousVertices(elementsToProcess:List[Int]) {
+    if (elementsToProcess.nonEmpty ) {
+      val toProcess = graph.adjacentVertices(elementsToProcess.head).filterNot(existsPathTo)
+      toProcess.foreach( previousVertex(_) = Some(elementsToProcess.head) )
+      markPreviousVertices(elementsToProcess.tail ++ toProcess)
+    }
+  }
 }

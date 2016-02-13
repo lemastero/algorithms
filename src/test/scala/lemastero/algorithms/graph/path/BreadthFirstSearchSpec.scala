@@ -180,7 +180,7 @@ class BreadthFirstSearchSpec extends FunSpec with MustMatchers {
       path.getPathTo(1) mustBe List[Int](0, 1)
       path.getPathTo(2) mustBe List[Int](0, 2)
       path.getPathTo(4) mustBe List[Int](0, 6, 4)
-      path.getPathTo(3) mustBe List[Int](0, 6, 4, 3)
+      path.getPathTo(3) mustBe List[Int](0, 5, 3)
     }
 
     it("getPathTo properly recognize complex graph 2") {
