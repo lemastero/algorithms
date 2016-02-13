@@ -1,10 +1,8 @@
 package lemastero.algorithms.graph.path
 
-object PathFinder {
-  class PathFromEmptyGraph extends RuntimeException
-  class PathFromNotExistingVertex extends RuntimeException
-  class VertexNotFound extends RuntimeException
-}
+class PathFromEmptyGraph extends RuntimeException
+class PathFromNotExistingVertex extends RuntimeException
+class VertexNotFound extends RuntimeException
 
 /**
   * PathFinder is algorithm that preprocess grapf for given vertex.
@@ -12,8 +10,8 @@ object PathFinder {
   */
 trait PathFinder {
 
-  def existsPathTo(destination:Int):Boolean
+  def existsPathTo(destination:Int): Boolean
 
-  def getPathTo(destination:Int):List[Int]
+  def getPathTo(destination:Int): List[Int]
 
 }

@@ -4,7 +4,8 @@ import scala.collection.mutable
 
 case class AdjacencyListGraph(numberOfVertices:Int) extends Graph {
 
-  private val adjacents:List[mutable.ListBuffer[Int]] = List.fill(numberOfVertices)(new mutable.ListBuffer[Int])
+  private val adjacents: List[mutable.ListBuffer[Int]] =
+    List.fill(numberOfVertices)(new mutable.ListBuffer[Int])
 
   override def addEdgeBetween(firstVertex: Int, secondVertex: Int): Unit = {
     adjacents(firstVertex) += secondVertex

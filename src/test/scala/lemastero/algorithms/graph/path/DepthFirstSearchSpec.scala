@@ -9,14 +9,14 @@ class DepthFirstSearchSpec extends FunSpec with MustMatchers {
 
     it("throws PathFromEmptyGraph exception when try to construct from empty Graph") {
       val graph = AdjacencyListGraph(0)
-      intercept[PathFinder.PathFromEmptyGraph] {
+      intercept[PathFromEmptyGraph] {
         DepthFirstSearch(graph: Graph, 42)
       }
     }
 
     it("throws PathFromNotExistingVertex exception when try to construct from not existing vertex") {
       val graph = AdjacencyListGraph(1)
-      intercept[PathFinder.PathFromNotExistingVertex] {
+      intercept[PathFromNotExistingVertex] {
         DepthFirstSearch(graph: Graph, 1)
       }
     }
@@ -27,7 +27,7 @@ class DepthFirstSearchSpec extends FunSpec with MustMatchers {
     it("getPathTo throws VertexNotFound when given not existing vertex") {
       val graph = AdjacencyListGraph(1)
       val path = DepthFirstSearch(graph: Graph, 0)
-      intercept[PathFinder.VertexNotFound] {
+      intercept[VertexNotFound] {
         path.getPathTo(1)
       }
     }
@@ -35,7 +35,7 @@ class DepthFirstSearchSpec extends FunSpec with MustMatchers {
     it("existsPathTo throws VertexNotFound when given not existing vertex") {
       val graph = AdjacencyListGraph(1)
       val path = DepthFirstSearch(graph: Graph, 0)
-      intercept[PathFinder.VertexNotFound] {
+      intercept[VertexNotFound] {
         path.existsPathTo(1)
       }
     }
@@ -141,6 +141,7 @@ class DepthFirstSearchSpec extends FunSpec with MustMatchers {
       graph.addEdgeBetween(9,11)
 
       graph.addEdgeBetween(11,12)
+
       val path = DepthFirstSearch(graph: Graph, 0)
 
       path.existsPathTo(6) mustBe true
@@ -163,10 +164,5 @@ class DepthFirstSearchSpec extends FunSpec with MustMatchers {
       path.getPathTo(4) mustBe List[Int](0, 6, 4)
       path.getPathTo(3) mustBe List[Int](0, 6, 4, 3)
     }
-
   }
-
 }
-
-
-
