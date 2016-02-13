@@ -3,20 +3,15 @@ package lemastero.algorithms.graph.path
 import lemastero.algorithms.graph.Graph
 
 /**
-  * Depth First Search (DFS) algorithm.
+  * Breadth First Search (BFS) algorithm.
   *
-  * Allows traversing and searchiong paths in graph data structures.
-  * DFS preprocess graph starting from arbitrary node.
-  * Then clients can query DFS to find path between given vertex
-  * and the initial one.
-  *
-  * Theseus could use it if Ariadne gave him a ball of thread
-  * _and_ something to mark in which path he already went.
-  *
-  * Algorithm was investigated by Charles Pierre Tremaux
-  * in context of solving mazes.
+  * Allows traversing and searching paths in graph data structures.
+  * BFS pre-process graph starting from arbitrary node.
+  * After pre-processing clients of BFS can query:
+  * - if there is path between given node and starting one
+  * - what is the path between given node and some other node
   */
-case class DepthFirstSearch(graph: Graph, root:Int) extends PathFinder {
+case class BreadthFirstSearch(graph: Graph, root:Int) extends PathFinder {
 
   private val previousVertex: Array[Option[Int]] =
     Array.fill[Option[Int]](graph.numberOfVertices)(None)
