@@ -2,15 +2,7 @@ package lemastero.algorithms.graph.path
 
 import lemastero.algorithms.graph.Graph
 
-/**
-  * Breadth First Search (BFS) algorithm.
-  *
-  * Allows traversing and searching paths in graph data structures.
-  * BFS pre-process graph starting from arbitrary node.
-  * After pre-processing clients of BFS can query:
-  * - if there is path between given node and starting one
-  * - what is the path between given node and some other node
-  */
+/** Breadth First Search (BFS) algorithm.  */
 case class BreadthFirstSearch(graph: Graph, root:Int) extends PathFinder {
 
   private val previousVertex: Array[Option[Int]] =
@@ -24,6 +16,8 @@ case class BreadthFirstSearch(graph: Graph, root:Int) extends PathFinder {
     if (destination >= graph.numberOfVertices) throw new VertexNotFound
     else previousVertex(destination).isDefined
 
+  /** Return the shortest path fro vertex provided as argument
+    * to the root vertex */
   override def getPathTo(destination: Int): List[Int] =
     if (destination >= graph.numberOfVertices) throw new VertexNotFound
     else if (previousVertex(destination).isEmpty) List()
