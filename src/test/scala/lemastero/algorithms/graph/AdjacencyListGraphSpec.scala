@@ -1,8 +1,8 @@
 package lemastero.algorithms.graph
 
-import org.scalatest.{MustMatchers, FunSpec}
+import lemastero.algorithms.BaseSpec
 
-class AdjacencyListGraphSpec extends FunSpec with MustMatchers {
+class AdjacencyListGraphSpec extends BaseSpec {
 
   describe("A Graph") {
 

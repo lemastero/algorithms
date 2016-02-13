@@ -8,16 +8,14 @@ class BreadthFirstSearchSpec extends FunSpec with MustMatchers {
   describe("factory method") {
 
     it("throws PathFromEmptyGraph exception when try to construct from empty Graph") {
-      val graph = AdjacencyListGraph(0)
       intercept[PathFromEmptyGraph] {
-        BreadthFirstSearch(graph: Graph, 42)
+        BreadthFirstSearch(AdjacencyListGraph(0), 42)
       }
     }
 
     it("throws PathFromNotExistingVertex exception when try to construct from not existing vertex") {
-      val graph = AdjacencyListGraph(1)
       intercept[PathFromNotExistingVertex] {
-        BreadthFirstSearch(graph: Graph, 1)
+        BreadthFirstSearch(AdjacencyListGraph(1), 1)
       }
     }
   }
@@ -25,16 +23,14 @@ class BreadthFirstSearchSpec extends FunSpec with MustMatchers {
   describe("validations") {
 
     it("getPathTo throws VertexNotFound when given not existing vertex") {
-      val graph = AdjacencyListGraph(1)
-      val path = BreadthFirstSearch(graph: Graph, 0)
+      val path = BreadthFirstSearch(AdjacencyListGraph(1), 0)
       intercept[VertexNotFound] {
         path.getPathTo(1)
       }
     }
 
     it("existsPathTo throws VertexNotFound when given not existing vertex") {
-      val graph = AdjacencyListGraph(1)
-      val path = BreadthFirstSearch(graph: Graph, 0)
+      val path = BreadthFirstSearch(AdjacencyListGraph(1), 0)
       intercept[VertexNotFound] {
         path.existsPathTo(1)
       }
@@ -45,20 +41,17 @@ class BreadthFirstSearchSpec extends FunSpec with MustMatchers {
   describe("DepthFirstSearch for single element graph") {
 
     it("exists path from root element") {
-      val graph = AdjacencyListGraph(1)
-      val path = BreadthFirstSearch(graph: Graph, 0)
+      val path = BreadthFirstSearch(AdjacencyListGraph(1), 0)
       path.existsPathTo(0) mustBe true
     }
 
     it("path from root element to itself consist of one step") {
-      val graph = AdjacencyListGraph(1)
-      val path = BreadthFirstSearch(graph: Graph, 0)
+      val path = BreadthFirstSearch(AdjacencyListGraph(1), 0)
       path.getPathTo(0) mustBe List(0)
     }
 
     it("returns list with root element when get root element") {
-      val graph = AdjacencyListGraph(1)
-      val path = BreadthFirstSearch(graph: Graph, 0)
+      val path = BreadthFirstSearch(AdjacencyListGraph(1), 0)
       path.getPathTo(0) mustBe List(0)
     }
 
@@ -67,8 +60,7 @@ class BreadthFirstSearchSpec extends FunSpec with MustMatchers {
   describe("DepthFirstSearch for 2 element graph") {
 
     it("getPathTo returns empty list when given element is not connected") {
-      val graph = AdjacencyListGraph(2)
-      val path = BreadthFirstSearch(graph: Graph, 0)
+      val path = BreadthFirstSearch(AdjacencyListGraph(2), 0)
       path.getPathTo(1) mustBe List.empty[Int]
     }
 
@@ -76,13 +68,12 @@ class BreadthFirstSearchSpec extends FunSpec with MustMatchers {
       val graph = AdjacencyListGraph(2)
       graph.addEdgeBetween(0, 1)
 
-      val path = BreadthFirstSearch(graph: Graph, 0)
+      val path = BreadthFirstSearch(graph, 0)
       path.getPathTo(1) mustBe List(0, 1)
     }
 
     it("existsPathTo returns false when argument is not root") {
-      val graph = AdjacencyListGraph(2)
-      val path = BreadthFirstSearch(graph: Graph, 0)
+      val path = BreadthFirstSearch(AdjacencyListGraph(2), 0)
       path.existsPathTo(1) mustBe false
     }
 
@@ -94,7 +85,7 @@ class BreadthFirstSearchSpec extends FunSpec with MustMatchers {
       val graph = AdjacencyListGraph(3)
       graph.addEdgeBetween(0,1)
       graph.addEdgeBetween(1,2)
-      val path = BreadthFirstSearch(graph: Graph, 0)
+      val path = BreadthFirstSearch(graph, 0)
       path.existsPathTo(2) mustBe true
     }
 
@@ -102,7 +93,7 @@ class BreadthFirstSearchSpec extends FunSpec with MustMatchers {
       val graph = AdjacencyListGraph(3)
       graph.addEdgeBetween(0,1)
       graph.addEdgeBetween(1,2)
-      val path = BreadthFirstSearch(graph: Graph, 0)
+      val path = BreadthFirstSearch(graph, 0)
       path.getPathTo(2) mustBe List(0, 1, 2)
     }
 
@@ -110,14 +101,14 @@ class BreadthFirstSearchSpec extends FunSpec with MustMatchers {
       val graph = AdjacencyListGraph(3)
       graph.addEdgeBetween(1, 2)
       graph.addEdgeBetween(1, 0)
-      val path = BreadthFirstSearch(graph: Graph, 0)
+      val path = BreadthFirstSearch(graph, 0)
       path.getPathTo(2) mustBe List(0, 1, 2)
     }
 
     it("getPathTo returns empty list when no edge between given object and root") {
       val graph = AdjacencyListGraph(3)
       graph.addEdgeBetween(1,2)
-      val path = BreadthFirstSearch(graph: Graph, 0)
+      val path = BreadthFirstSearch(graph, 0)
       path.getPathTo(2) mustBe List[Int]()
     }
 
@@ -134,7 +125,7 @@ class BreadthFirstSearchSpec extends FunSpec with MustMatchers {
       graph.addEdgeBetween(3,4)
       graph.addEdgeBetween(2,4)
 
-      val path = BreadthFirstSearch(graph: Graph, 0)
+      val path = BreadthFirstSearch(graph, 0)
 
       path.getPathTo(4) mustBe List[Int](0, 2, 4)
     }
@@ -197,7 +188,7 @@ class BreadthFirstSearchSpec extends FunSpec with MustMatchers {
 
       graph.addEdgeBetween(3,5)
 
-      val path = BreadthFirstSearch(graph: Graph, 0)
+      val path = BreadthFirstSearch(graph, 0)
 
       path.existsPathTo(0) mustBe true
       path.existsPathTo(1) mustBe true
