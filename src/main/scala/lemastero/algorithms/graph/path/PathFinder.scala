@@ -5,8 +5,10 @@ class PathFromNotExistingVertex extends RuntimeException
 class VertexNotFound extends RuntimeException
 
 /**
-  * PathFinder is algorithm that preprocess grapf for given vertex.
-  * Can answer if exist path between vertices.
+  * PathFinder is algorithm that pre-process graph for given vertex.
+  * After that it can can answer:
+  *  - if there is path between given node and starting one
+  *  - what is the path between given node and some other node
   */
 trait PathFinder {
 

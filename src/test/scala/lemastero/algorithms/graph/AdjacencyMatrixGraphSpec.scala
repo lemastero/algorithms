@@ -1,6 +1,6 @@
 package lemastero.algorithms.graph
 
-import lemastero.algorithms.tdd.BaseSpec
+import lemastero.algorithms.BaseSpec
 
 class AdjacencyMatrixGraphSpec extends BaseSpec {
 
