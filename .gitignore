@@ -1,6 +1,6 @@
-# sbt specific
+# Scala and sbt
 target/
 project/
 
-# Scala-IDE specific
+# IDE
 .idea/
