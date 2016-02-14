@@ -1,6 +1,6 @@
 package lemastero.algorithms.trie
 
-import lemastero.algorithms.tdd.BaseSpec
+import lemastero.algorithms.BaseSpec
 
 class RWayTrieSpec extends BaseSpec {
 

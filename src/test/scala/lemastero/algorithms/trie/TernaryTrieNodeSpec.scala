@@ -1,6 +1,6 @@
 package lemastero.algorithms.trie
 
-import lemastero.algorithms.tdd.BaseSpec
+import lemastero.algorithms.BaseSpec
 import lemastero.algorithms.trie.TernarySearchTrieSimpleFactory._
 
 class TernaryTrieNodeSpec extends BaseSpec {

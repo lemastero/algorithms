@@ -1,6 +1,6 @@
 package lemastero.algorithms.compression
 
-import lemastero.algorithms.tdd.BaseSpec
+import lemastero.algorithms.BaseSpec
 
 class RunLengthCodingSpec extends BaseSpec {
 

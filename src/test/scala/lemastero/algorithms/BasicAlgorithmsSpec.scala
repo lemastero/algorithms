@@ -1,6 +1,5 @@
 package lemastero.algorithms
 
-import lemastero.algorithms.tdd.BaseSpec
 import lemastero.algorithms.BasicAlgorithms._
 
 class BasicAlgorithmsSpec extends BaseSpec {
