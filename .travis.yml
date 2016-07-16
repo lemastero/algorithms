@@ -1,7 +1,7 @@
 language: scala
 
 script:
-  - sbt clean coverage test scalastyle coverageReport
+  - sbt clean coverage test scalastyle
 
 after_success:
   - sbt coverageReport coveralls && bash <(curl -s https://codecov.io/bash)
