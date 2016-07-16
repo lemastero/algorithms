@@ -16,37 +16,37 @@ class RunLengthCoding {
   }
 
 
-  def compress(uncompressed:Iterator[Int]): List[Int]  = {
-    val result = mutable.ListBuffer[Int]()
-    if(uncompressed.isEmpty) return result.toList
+  def compress(uncompressed:Iterator[Int]): List[Int]  =
+    if(uncompressed.isEmpty) List()
+    else compressNonEmpty(uncompressed)
 
-    var setCount:Int = 0
-    var unsetCount:Int = 0
-    while(uncompressed.hasNext) {
-      if(uncompressed.next() == 1) {
+  private def compressNonEmpty(uncompressed:Iterator[Int]): List[Int] = {
+    val result = mutable.ListBuffer[Int]()
+    var setCount: Int = 0
+    var unsetCount: Int = 0
+    while (uncompressed.hasNext) {
+      if (uncompressed.next() == 1) {
         setCount = setCount + 1
-        if(unsetCount > 0) {
+        if (unsetCount > 0) {
           result.append(unsetCount)
           unsetCount = 0
         }
       } else {
-        if(setCount > 0) {
+        if (setCount > 0) {
           result.append(setCount)
           setCount = 0
         }
         unsetCount = unsetCount + 1
       }
     }
-    if(setCount > 0 || result.isEmpty) {
+    if (setCount > 0 || result.isEmpty) {
       result.append(setCount)
       setCount = 0
     }
-    if(unsetCount > 0) {
+    if (unsetCount > 0) {
       result.append(unsetCount)
       unsetCount = 0
     }
-
-
     result.toList
   }
 
