@@ -1,16 +1,8 @@
 package lemastero.algorithms.graph
 
-trait MarkColor {
-  def other:MarkColor
-}
-
-case object Red extends MarkColor {
-  val other = White
-}
-
-case object White extends MarkColor {
-  val other = Red
-}
+sealed class MarkColor(val other:MarkColor)
+case object Red extends MarkColor(White)
+case object White extends MarkColor(Red)
 
 object GraphUtils {
 
@@ -22,7 +14,7 @@ object GraphUtils {
   private def isBipartiteNonTrivialGraph(graph: Graph): Boolean = {
     val colors: Array[Option[MarkColor]] = Array.fill(graph.numberOfVertices)(None)
 
-    def colorVertex(root: Int, color: Red.type): Boolean = {
+    def colorVertex(root: Int, color: MarkColor): Boolean = {
       colors(root) = Some(color)
 
       graph
