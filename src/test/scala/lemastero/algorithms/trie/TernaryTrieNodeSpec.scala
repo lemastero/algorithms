@@ -84,7 +84,6 @@ class TernaryTrieNodeSpec extends BaseSpec {
       assertGet(node, "a", 4)
     }
 
-    /*
     it("places multi character key") {
       val node = newTernaryTrieNode
       node.put("fo", 42)
@@ -92,7 +91,6 @@ class TernaryTrieNodeSpec extends BaseSpec {
       assertNodeContent(node, 'f', None)
       assertNodeContent(node.middle, 'o', 42)
     }
-    */
   }
 
   def assertGet(node: TernaryTrieNode[Integer], key:String, value:Int): Unit =
@@ -103,7 +101,7 @@ class TernaryTrieNodeSpec extends BaseSpec {
 
   def assertNodeContent(node: Option[TernaryTrieNode[Integer]], key:Char, value:Int): Unit = {
     node must not be None
-    assertNodeContent(node.get, key, value)
+    assertNodeContent(node.orNull, key, value)
   }
 
   def assertNodeContent(node: TernaryTrieNode[Integer], key:Char, value:Option[Int]): Unit = {
@@ -117,7 +115,7 @@ class TernaryTrieNodeSpec extends BaseSpec {
   }
 
   def assertNodeKey(node: Option[TernaryTrieNode[Integer]], key:Char): Unit =
-    assertNodeKey(node.get, key)
+    assertNodeKey(node.orNull, key)
 
   def assertNodeKey(node: TernaryTrieNode[Integer], key:Char): Unit =
     node.key mustBe Some(key)
