@@ -20,7 +20,6 @@ private class TrieNode[Value >: Null] {
     val result = new StringBuilder("(")
       .append(value).append(" [")
 
-
     for (i <- children.indices)
       if (Option(children(i)).isDefined)
         result.append(i.toChar).append(": ").append(children(i)).append(", ")
@@ -56,8 +55,7 @@ class RWayTrie[Value >: Null] extends StringSymbolTable[Value] {
     def getNode(currentChild:Option[TrieNode[Value]], step:Int): Option[TrieNode[Value]] =
       currentChild.flatMap(
          child =>
-           if (key.isEnd(step))
-             Option(child)
+           if (key.isEnd(step)) Option(child)
            else
              getNode(Option(child.children(key.pick(step))), step + 1)
       )
