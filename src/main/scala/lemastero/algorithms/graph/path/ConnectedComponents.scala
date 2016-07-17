@@ -1,5 +1,6 @@
 package lemastero.algorithms.graph.path
 
+import cats.data.Xor
 import lemastero.algorithms.graph.Graph
 
 /**
@@ -16,11 +17,12 @@ case class ConnectedComponents(graph:Graph) {
 
   initialize()
 
-  def areConnected(first: Int, second:Int): Boolean = {
-    if(first >= graph.numberOfVertices) throw new VertexNotFound
-    if(second >= graph.numberOfVertices) throw new VertexNotFound
-    componentsId(first) == componentsId(second)
-  }
+  def areConnected(first: Int, second:Int): Xor[VertexNotFound, Boolean] =
+    if (first >= graph.numberOfVertices)
+      Xor.Left(VertexNotFound(first))
+    else if(second >= graph.numberOfVertices)
+      Xor.Left(VertexNotFound(second))
+    else Xor.Right(componentsId(first) == componentsId(second))
 
   def numberOfComponents: Int = componentsId.toSet.size
 
