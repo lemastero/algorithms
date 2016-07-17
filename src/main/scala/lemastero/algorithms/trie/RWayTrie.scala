@@ -44,7 +44,7 @@ class RWayTrie[Value >: Null] extends StringSymbolTable[Value] {
       }
 
       val index = stringPath.pick(currentIndex)
-      currentChildToVisit.children(index) = putValue(currentChildToVisit.children(index), currentIndex+1)
+      currentChildToVisit.children(index) = putValue(currentChildToVisit.children(index), currentIndex + 1)
       currentChildToVisit
     }
 
