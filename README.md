@@ -6,7 +6,6 @@
 
 # Algorithms
 
-Implementation of algorithms in Scala using TDD.
-Done mainly for fun. Yet if someone is brave enouth to use it I don't mind.
+Implementation of some algorithms in Scala using TDD. Project used to play around with online, free for open source tools like Waffle.io, Travic CI, Coveralls.io, Codecov, Codacy.
 
 [![Throughput Graph](https://graphs.waffle.io/lemastero/algorithms/throughput.svg)](https://waffle.io/lemastero/algorithms/metrics/throughput)
