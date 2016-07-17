@@ -8,7 +8,7 @@ class RWayTrieSpec extends BaseSpec {
 
     it("has null in root and its children") {
       val trie = new RWayTrie[Integer]()
-      trie.root.value mustBe null
+      trie.root.value mustBe None
       trie.root.children.count(_ != null) mustBe 0
     }
 
@@ -23,7 +23,7 @@ class RWayTrieSpec extends BaseSpec {
       val trie = new RWayTrie[Integer]()
       trie.put("a", 3)
 
-      trie.root.children('a').value mustBe 3
+      trie.root.children('a').value mustBe Some(3)
       trie.root.children.count(_ != null) mustBe 1
       trie.root.children('a').children.count(_ != null) mustBe 0
     }
@@ -32,9 +32,9 @@ class RWayTrieSpec extends BaseSpec {
       val trie = new RWayTrie[Integer]()
       trie.put("bar", 4)
 
-      trie.root.children('b').value mustBe null
-      trie.root.children('b').children('a').value mustBe null
-      trie.root.children('b').children('a').children('r').value mustBe 4
+      trie.root.children('b').value mustBe None
+      trie.root.children('b').children('a').value mustBe None
+      trie.root.children('b').children('a').children('r').value mustBe Some(4)
 
       trie.root.children.count(_ != null) mustBe 1
       trie.root.children('b').children.count(_ != null) mustBe 1
@@ -47,10 +47,10 @@ class RWayTrieSpec extends BaseSpec {
       trie.put("ba", 12)
       trie.put("pa", 100)
 
-      trie.root.children('b').value mustBe null
-      trie.root.children('b').children('a').value mustBe 12
-      trie.root.children('p').children('a').value mustBe 100
-      trie.root.children('p').value mustBe null
+      trie.root.children('b').value mustBe None
+      trie.root.children('b').children('a').value mustBe Some(12)
+      trie.root.children('p').children('a').value mustBe Some(100)
+      trie.root.children('p').value mustBe None
 
       trie.root.children.count(_ != null) mustBe 2
       trie.root.children('b').children.count(_ != null) mustBe 1
@@ -64,11 +64,11 @@ class RWayTrieSpec extends BaseSpec {
       trie.put("sear", 5)
       trie.put("sea", 6)
 
-      trie.root.children('s').children('e').children('a').children('r').value mustBe 5
-      trie.root.children('s').children('e').children('a').value mustBe 6
+      trie.root.children('s').children('e').children('a').children('r').value mustBe Some(5)
+      trie.root.children('s').children('e').children('a').value mustBe Some(6)
 
-      trie.root.children('s').children('e').value mustBe null
-      trie.root.children('s').value mustBe null
+      trie.root.children('s').children('e').value mustBe None
+      trie.root.children('s').value mustBe None
 
       trie.root.children('s').children('e').children('a').children('r').children.count(_ != null) mustBe 0
       trie.root.children('s').children('e').children('a').children.count(_ != null) mustBe 1
@@ -95,6 +95,5 @@ class RWayTrieSpec extends BaseSpec {
       trie.get("Foobar") mustBe None
     }
   }
-
 
 }
