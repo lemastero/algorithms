@@ -33,22 +33,19 @@ class RWayTrie[Value >: Null] extends StringSymbolTable[Value] {
   private[trie] var root:TrieNode[Value] = new TrieNode[Value]()
 
   override def put(stringPath:String, newValue:Value):Unit = {
-    def putValue(currentChild: TrieNode[Value], currentIndex: Int): TrieNode[Value] = {
-      var currentChildToVisit = currentChild
-      if(currentChild == null)
-        currentChildToVisit = new TrieNode[Value]()
-
+    def putValue(currentChild: Option[TrieNode[Value]], currentIndex: Int): TrieNode[Value] = {
+      val currentChildToVisit = currentChild.getOrElse(new TrieNode[Value]())
       if( stringPath.isEnd(currentIndex) ) {
         currentChildToVisit.value = newValue
-        return currentChildToVisit
+        currentChildToVisit
+      } else {
+        val index = stringPath.pick(currentIndex)
+        currentChildToVisit.children(index) = putValue(Option(currentChildToVisit.children(index)), currentIndex + 1)
+        currentChildToVisit
       }
-
-      val index = stringPath.pick(currentIndex)
-      currentChildToVisit.children(index) = putValue(currentChildToVisit.children(index), currentIndex + 1)
-      currentChildToVisit
     }
 
-    root = putValue(root, 0)
+    root = putValue(Option(root), 0)
   }
 
   override def get(key:String): Option[Value] = {
