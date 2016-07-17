@@ -2,7 +2,7 @@ package lemastero.algorithms.graph.path
 
 class PathFromEmptyGraph extends RuntimeException
 class PathFromNotExistingVertex extends RuntimeException
-class VertexNotFound extends RuntimeException
+sealed case class VertexNotFound(vertex:Int) extends RuntimeException
 
 /**
   * PathFinder is algorithm that pre-process graph for given vertex.
