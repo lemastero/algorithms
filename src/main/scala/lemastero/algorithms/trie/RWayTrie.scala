@@ -10,7 +10,7 @@ import lemastero.algorithms.trie.PathHolder.Path
   */
 private class TrieNode[Value >: Null] {
 
-  val NumberOfChildren:Int = 256 // TODO printable ASCII is between 32 and 126
+  val NumberOfChildren: Int = 256 // printable ASCII is between 32 and 126
 
   private[trie] var value:Value = null
   private[trie] val children:Array[TrieNode[Value]] =
@@ -53,17 +53,18 @@ class RWayTrie[Value >: Null] extends StringSymbolTable[Value] {
 
   override def get(key:String): Option[Value] = {
 
-    def getNode(currentChild:TrieNode[Value], step:Int): Option[TrieNode[Value]] =
-      if(currentChild == null)
-        None
-      else if( key.isEnd(step) )
-        Some(currentChild)
-      else
-        getNode(currentChild.children(key.pick(step)), step + 1)
+    def getNode(currentChild:Option[TrieNode[Value]], step:Int): Option[TrieNode[Value]] =
+      currentChild.flatMap(
+         child =>
+           if( key.isEnd(step) )
+             Option(child)
+           else
+             getNode(Option(child.children(key.pick(step))), step + 1)
+      )
 
-    val foundNode = getNode(root, 0)
-    if(foundNode.isEmpty) return None
-    Option(foundNode.get.value)
+    val foundNode = getNode(Option(root), 0)
+    if(foundNode.isEmpty) None
+    else Option(foundNode.get.value)
   }
 
   // TODO implement delete
