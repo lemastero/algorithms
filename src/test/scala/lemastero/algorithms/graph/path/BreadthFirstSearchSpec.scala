@@ -1,7 +1,8 @@
 package lemastero.algorithms.graph.path
 
 import cats.data.{Validated, Xor}
-import lemastero.algorithms.graph.{AdjacencyListGraph, Graph}
+import lemastero.algorithms.graph.AdjacencyListGraph._
+import lemastero.algorithms.graph.Graph
 import org.scalatest.{FunSpec, MustMatchers}
 
 class BreadthFirstSearchSpec
@@ -166,14 +167,6 @@ class BreadthFirstSearchSpec
   private def assertPathTo(path: PathFinder, destination: Int,
                            expected1: List[Int], expected2: List[Int]): Unit =
     path.getPathTo(destination) must (equal(Xor.Right(expected1)) or equal(Xor.Right(expected2)))
-
-  private def newGraph(numberOfVertices: Int, edges: (Int, Int)*): Graph = {
-    val graph = AdjacencyListGraph(numberOfVertices)
-    edges.foreach(edge =>
-      graph.addEdgeBetween(edge._1, edge._2)
-    )
-    graph
-  }
 
   private def newBFS(root: Int, numberOfVertices: Int): PathFinder =
     newBFS(root, newGraph(numberOfVertices))

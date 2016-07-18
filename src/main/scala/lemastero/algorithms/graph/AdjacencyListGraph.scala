@@ -1,20 +1,37 @@
 package lemastero.algorithms.graph
 
+import lemastero.algorithms.graph.AdjacencyListGraph._
+import lemastero.algorithms.graph.Graph._
 import scala.collection.mutable
 
-case class AdjacencyListGraph(numberOfVertices:Int) extends Graph {
+object AdjacencyListGraph {
+  type VertexEdges = mutable.ListBuffer[Int]
+  type VerticesEdges = List[VertexEdges]
 
-  private val adjacents: List[mutable.ListBuffer[Int]] =
-    List.fill(numberOfVertices)(new mutable.ListBuffer[Int])
-
-  override def addEdgeBetween(firstVertex: Int, secondVertex: Int): Unit = {
-    adjacents(firstVertex) += secondVertex
-    adjacents(secondVertex) += firstVertex
+  def newGraph(numberOfVertices: Int, edges: RawEdge*): AdjacencyListGraph = {
+    val adjacent: VerticesEdges =
+      verticesNoEdges(numberOfVertices)
+    edges.foreach(addEdgeBetween(adjacent, _))
+    new AdjacencyListGraph(adjacent)
   }
 
+  private def verticesNoEdges(size: Int): VerticesEdges =
+    List.fill(size)(new VertexEdges)
+
+  private def addEdgeBetween(listBuffers: VerticesEdges,  edge: RawEdge): Unit = {
+    val (first: Int, second: Int) = edge
+    listBuffers(first) += second
+    listBuffers(second) += first
+  }
+}
+
+class AdjacencyListGraph(adjacent: VerticesEdges) extends Graph {
+
+  override def numberOfVertices: Int = adjacent.size
+
   override def adjacentVertices(vertex: Int): List[Int] =
-    adjacents(vertex).toList
+    adjacent(vertex).toList
 
   override def numberOfEdges: Int =
-    adjacents.map(e => e.size).sum / 2
+    adjacent.map(e => e.size).sum / 2
 }
