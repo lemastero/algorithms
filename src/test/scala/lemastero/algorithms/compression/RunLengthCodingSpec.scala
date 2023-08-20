@@ -37,7 +37,6 @@ class RunLengthCodingSpec extends BaseSpec {
     it("handle sequence of 0s") {
       assertCompress(createSequence(0, 0), 0, 2)
     }
-
   }
 
   def assertCompress(input: Iterator[Int], array:Int*) = {

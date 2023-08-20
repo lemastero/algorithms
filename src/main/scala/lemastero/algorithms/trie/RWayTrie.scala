@@ -66,5 +66,4 @@ class RWayTrie[Value >: Null] extends StringSymbolTable[Value] {
   }
 
   // TODO implement delete
-
 }

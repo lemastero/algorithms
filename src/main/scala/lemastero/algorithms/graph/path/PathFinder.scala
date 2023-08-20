@@ -1,7 +1,5 @@
 package lemastero.algorithms.graph.path
 
-import cats.data.Xor
-
 sealed trait GraphCreateError
 final case object PathFromEmptyGraph extends GraphCreateError
 final case class PathFromNotExistingVertex(invalidVertex: Int, maxVertex: Int)
@@ -17,8 +15,7 @@ final case class VertexNotFound(vertex: Int) extends RuntimeException
   */
 trait PathFinder {
 
-  def existsPathTo(destination: Int): Xor[VertexNotFound, Boolean]
+  def existsPathTo(destination: Int): Either[VertexNotFound, Boolean]
 
-  def getPathTo(destination: Int): Xor[VertexNotFound, List[Int]]
-
+  def getPathTo(destination: Int): Either[VertexNotFound, List[Int]]
 }

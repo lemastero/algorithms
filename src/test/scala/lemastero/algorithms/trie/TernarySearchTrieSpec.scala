@@ -25,5 +25,4 @@ class TernarySearchTrieSpec extends BaseSpec {
       trie.get("fooz") mustBe None
     }
   }
-
 }
