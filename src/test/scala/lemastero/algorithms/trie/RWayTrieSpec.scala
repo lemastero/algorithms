@@ -39,7 +39,12 @@ class RWayTrieSpec extends BaseSpec {
       trie.root.children.count(_ != null) mustBe 1
       trie.root.children('b').children.count(_ != null) mustBe 1
       trie.root.children('b').children('a').children.count(_ != null) mustBe 1
-      trie.root.children('b').children('a').children('r').children.count(_ != null) mustBe 0
+      trie.root
+        .children('b')
+        .children('a')
+        .children('r')
+        .children
+        .count(_ != null) mustBe 0
     }
 
     it("with 2 character key create appriopriate nodes") {
@@ -64,14 +69,30 @@ class RWayTrieSpec extends BaseSpec {
       trie.put("sear", 5)
       trie.put("sea", 6)
 
-      trie.root.children('s').children('e').children('a').children('r').value mustBe Some(5)
+      trie.root
+        .children('s')
+        .children('e')
+        .children('a')
+        .children('r')
+        .value mustBe Some(5)
       trie.root.children('s').children('e').children('a').value mustBe Some(6)
 
       trie.root.children('s').children('e').value mustBe None
       trie.root.children('s').value mustBe None
 
-      trie.root.children('s').children('e').children('a').children('r').children.count(_ != null) mustBe 0
-      trie.root.children('s').children('e').children('a').children.count(_ != null) mustBe 1
+      trie.root
+        .children('s')
+        .children('e')
+        .children('a')
+        .children('r')
+        .children
+        .count(_ != null) mustBe 0
+      trie.root
+        .children('s')
+        .children('e')
+        .children('a')
+        .children
+        .count(_ != null) mustBe 1
       trie.root.children('s').children('e').children.count(_ != null) mustBe 1
       trie.root.children('s').children.count(_ != null) mustBe 1
     }

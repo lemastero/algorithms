@@ -1,11 +1,8 @@
 package lemastero.algorithms.pseudorandom_generators
 
-/**
-  * Xorshift algoritym
-  * George Marsaglia, 2003
+/** Xorshift algoritym George Marsaglia, 2003
   *
-  * https://en.wikipedia.org/wiki/Xorshift
-  * http://xoroshiro.di.unimi.it/
+  * https://en.wikipedia.org/wiki/Xorshift http://xoroshiro.di.unimi.it/
   */
 case class Xorshift(seed: Int) {
 

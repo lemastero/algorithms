@@ -18,7 +18,10 @@ object AdjacencyListGraph {
   private def verticesNoEdges(size: Int): VerticesEdges =
     List.fill(size)(new VertexEdges)
 
-  private def addEdgeBetween(listBuffers: VerticesEdges,  edge: RawEdge): Unit = {
+  private def addEdgeBetween(
+      listBuffers: VerticesEdges,
+      edge: RawEdge
+  ): Unit = {
     val (first: Int, second: Int) = edge
     listBuffers(first) += second
     listBuffers(second) += first

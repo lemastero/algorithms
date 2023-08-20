@@ -11,13 +11,17 @@ class ConnectedComponentsSpec extends BaseSpec {
     it("returns VertexNotFound when the first vertex do not exist in graph") {
       val cc = ConnectedComponents(newGraph(1))
       cc.areConnected(1, 0) mustBe Left(VertexNotFound(1))
-      cc.areConnected(randomHigVertex, 0) mustBe Left(VertexNotFound(randomHigVertex))
+      cc.areConnected(randomHigVertex, 0) mustBe Left(
+        VertexNotFound(randomHigVertex)
+      )
     }
 
     it("returns VertexNotFound when second argument do not exist in graph") {
       val cc = ConnectedComponents(newGraph(1))
       cc.areConnected(0, 1) mustBe Left(VertexNotFound(1))
-      cc.areConnected(0, randomHigVertex) mustBe Left(VertexNotFound(randomHigVertex))
+      cc.areConnected(0, randomHigVertex) mustBe Left(
+        VertexNotFound(randomHigVertex)
+      )
     }
 
     it("returns false for not connected vertices") {
@@ -64,13 +68,13 @@ class ConnectedComponentsSpec extends BaseSpec {
     }
 
     it("returns 1 for connected graph") {
-      val graph = newGraph(4, (0,1), (1,3), (2,3))
+      val graph = newGraph(4, (0, 1), (1, 3), (2, 3))
       val cc = ConnectedComponents(graph)
       cc.numberOfComponents mustBe 1
     }
 
     it("handle complicated case") {
-      val graph = newGraph(8, (0,1), (1,3), (2,3), (4,5), (5,6))
+      val graph = newGraph(8, (0, 1), (1, 3), (2, 3), (4, 5), (5, 6))
       val cc = ConnectedComponents(graph)
 
       cc.numberOfComponents mustBe 3

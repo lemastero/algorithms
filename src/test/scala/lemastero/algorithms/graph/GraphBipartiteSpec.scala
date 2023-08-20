@@ -7,11 +7,11 @@ class GraphBipartiteSpec extends BaseSpec {
 
   describe("trivial graphs") {
     it("empty graph is bipartite") {
-      GraphUtils.isBipartite( newGraph(0) ) mustBe true
+      GraphUtils.isBipartite(newGraph(0)) mustBe true
     }
 
     it("single element graph is bipartite") {
-      GraphUtils.isBipartite( newGraph(1) ) mustBe true
+      GraphUtils.isBipartite(newGraph(1)) mustBe true
     }
 
     it("three elements graph with cycle is not bipartite") {
@@ -20,12 +20,18 @@ class GraphBipartiteSpec extends BaseSpec {
     }
 
     it("detect complex example of bipartype graph") {
-      val graph = newGraph(7,
-        (0, 1), (0, 2), (0, 6), (0, 5),
+      val graph = newGraph(
+        7,
+        (0, 1),
+        (0, 2),
+        (0, 6),
+        (0, 5),
         (1, 3),
-        (2, 3), (2, 4),
+        (2, 3),
+        (2, 4),
         (6, 4),
-        (5, 4))
+        (5, 4)
+      )
       GraphUtils.isBipartite(graph) mustBe true
     }
   }
