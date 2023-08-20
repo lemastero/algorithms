@@ -12,5 +12,4 @@ case class MiddleSquare(seed: Int) extends PRNG {
     val newSeed = "%06d".format( seed * seed / 100 ).drop(2).toInt
     ( new MiddleSquare(newSeed), newSeed )
   }
-
 }

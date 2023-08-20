@@ -9,6 +9,5 @@ object PathHolder {
 
     def isEnd(stage: Int): Boolean =
       stage == stringPath.length
-
   }
 }

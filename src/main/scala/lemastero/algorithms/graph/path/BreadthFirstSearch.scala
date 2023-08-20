@@ -1,6 +1,6 @@
 package lemastero.algorithms.graph.path
 
-import cats.data.{Xor, Validated}
+import cats.data.Validated
 import lemastero.algorithms.graph.Graph
 
 object BreadthFirstSearch {
@@ -12,7 +12,6 @@ object BreadthFirstSearch {
       Validated.Invalid(PathFromNotExistingVertex(root, graph.numberOfVertices))
     else Validated.Valid(new BreadthFirstSearch(graph, root))
   }
-
 }
 
 /**
@@ -28,16 +27,16 @@ class BreadthFirstSearch(graph: Graph, root: Int) extends PathFinder {
 
   initialize()
 
-  override def existsPathTo(destination: Int): Xor[VertexNotFound, Boolean] =
-    if (destination >= graph.numberOfVertices) Xor.Left(VertexNotFound(destination))
-    else Xor.Right(previousVertex(destination).isDefined)
+  override def existsPathTo(destination: Int): Either[VertexNotFound, Boolean] =
+    if (destination >= graph.numberOfVertices) Left(VertexNotFound(destination))
+    else Right(previousVertex(destination).isDefined)
 
   /** Return the shortest path fro vertex provided as argument
     * to the root vertex */
-  override def getPathTo(destination: Int): Xor[VertexNotFound, List[Int]] =
-    if (destination >= graph.numberOfVertices) Xor.Left(VertexNotFound(destination))
-    else if (previousVertex(destination).isEmpty) Xor.Right(List())
-    else Xor.Right(createPathFor(destination, List[Int]()))
+  override def getPathTo(destination: Int): Either[VertexNotFound, List[Int]] =
+    if (destination >= graph.numberOfVertices) Left(VertexNotFound(destination))
+    else if (previousVertex(destination).isEmpty) Right(List())
+    else Right(createPathFor(destination, List[Int]()))
 
   private def createPathFor(destination: Int, soFar: List[Int]): List[Int] =
     if (destination == root) root :: soFar

@@ -1,6 +1,5 @@
 package lemastero.algorithms.graph.path
 
-import cats.data.Xor
 import lemastero.algorithms.BaseSpec
 import lemastero.algorithms.graph.AdjacencyListGraph._
 
@@ -11,31 +10,31 @@ class ConnectedComponentsSpec extends BaseSpec {
 
     it("returns VertexNotFound when the first vertex do not exist in graph") {
       val cc = ConnectedComponents(newGraph(1))
-      cc.areConnected(1, 0) mustBe Xor.left(VertexNotFound(1))
-      cc.areConnected(randomHigVertex, 0) mustBe Xor.left(VertexNotFound(randomHigVertex))
+      cc.areConnected(1, 0) mustBe Left(VertexNotFound(1))
+      cc.areConnected(randomHigVertex, 0) mustBe Left(VertexNotFound(randomHigVertex))
     }
 
     it("returns VertexNotFound when second argument do not exist in graph") {
       val cc = ConnectedComponents(newGraph(1))
-      cc.areConnected(0, 1) mustBe Xor.left(VertexNotFound(1))
-      cc.areConnected(0, randomHigVertex) mustBe Xor.left(VertexNotFound(randomHigVertex))
+      cc.areConnected(0, 1) mustBe Left(VertexNotFound(1))
+      cc.areConnected(0, randomHigVertex) mustBe Left(VertexNotFound(randomHigVertex))
     }
 
     it("returns false for not connected vertices") {
       val cc = ConnectedComponents(newGraph(2))
-      cc.areConnected(1, 0) mustBe Xor.Right(false)
+      cc.areConnected(1, 0) mustBe Right(false)
     }
 
     it("returns true for connected vertices") {
       val cc = ConnectedComponents(newGraph(2, (0, 1)))
-      cc.areConnected(1, 0) mustBe Xor.Right(true)
+      cc.areConnected(1, 0) mustBe Right(true)
     }
 
     it("returns true for connected vertices with non trivial connection") {
       val graph = newGraph(6, (0, 1), (1, 2), (1, 3), (2, 4), (4, 5), (5, 3))
       val cc = ConnectedComponents(graph)
 
-      cc.areConnected(0, 3) mustBe Xor.Right(true)
+      cc.areConnected(0, 3) mustBe Right(true)
     }
 
     it("returns false for separated connected groups") {
@@ -43,8 +42,8 @@ class ConnectedComponentsSpec extends BaseSpec {
 
       val cc = ConnectedComponents(graph)
 
-      cc.areConnected(0, 5) mustBe Xor.Right(false)
-      cc.areConnected(4, 5) mustBe Xor.Right(true)
+      cc.areConnected(0, 5) mustBe Right(false)
+      cc.areConnected(4, 5) mustBe Right(true)
     }
   }
 

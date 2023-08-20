@@ -1,16 +1,15 @@
 package lemastero.algorithms.pseudorandom_generators
 
-import org.scalatest.{MustMatchers, FunSuite}
+import lemastero.algorithms.BaseSpec
 
-class MiddleSquareSpec extends FunSuite with MustMatchers {
+class MiddleSquareSpec extends BaseSpec {
 
-  test("MiddleSquare return square without edges") {
+  it("MiddleSquare return square without edges") {
     MiddleSquare(1111).nextInt._1 mustBe MiddleSquare(2343)
     MiddleSquare(1111).nextInt._2 mustBe 2343
 
     MiddleSquare(1111).nextInt._1.nextInt._2 mustBe 4896
   }
-
 }
 
 

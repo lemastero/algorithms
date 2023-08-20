@@ -1,13 +1,14 @@
 package lemastero.algorithms.graph.path
 
-import cats.data.{Validated, Xor}
+import cats.data.Validated
 import lemastero.algorithms.graph.AdjacencyListGraph._
 import lemastero.algorithms.graph.Graph
-import org.scalatest.{FunSpec, MustMatchers}
+import org.scalatest.funspec.AnyFunSpec
+import org.scalatest.matchers.must.Matchers
 
 class BreadthFirstSearchSpec
-  extends FunSpec
-    with MustMatchers {
+  extends AnyFunSpec
+    with Matchers {
 
   describe("factory method") {
 
@@ -24,11 +25,11 @@ class BreadthFirstSearchSpec
   describe("validations") {
 
     it("getPathTo returns VertexNotFound when given not existing vertex") {
-      newBFS(0, 1).getPathTo(1) mustBe Xor.Left(VertexNotFound(1))
+      newBFS(0, 1).getPathTo(1) mustBe Left(VertexNotFound(1))
     }
 
     it("existsPathTo returns VertexNotFound when given not existing vertex") {
-      newBFS(0, 1).existsPathTo(1) mustBe Xor.Left(VertexNotFound(1))
+      newBFS(0, 1).existsPathTo(1) mustBe Left(VertexNotFound(1))
     }
   }
 
@@ -153,20 +154,20 @@ class BreadthFirstSearchSpec
 
   private def assertNotExistsPathTo(path: PathFinder, destinations: Int*): Unit =
     destinations.foreach( dest =>
-      path.existsPathTo(dest) mustBe Xor.Right(false)
+      path.existsPathTo(dest) mustBe Right(false)
     )
 
   private def assertExistsPathTo(path: PathFinder, destinations: Int*): Unit =
     destinations.foreach(dest =>
-      path.existsPathTo(dest) mustBe Xor.Right(true)
+      path.existsPathTo(dest) mustBe Right(true)
     )
 
   private def assertPathTo(path: PathFinder, destination: Int, expected: List[Int]): Unit =
-    path.getPathTo(destination) mustBe Xor.Right(expected)
+    path.getPathTo(destination) mustBe Right(expected)
 
   private def assertPathTo(path: PathFinder, destination: Int,
                            expected1: List[Int], expected2: List[Int]): Unit =
-    path.getPathTo(destination) must (equal(Xor.Right(expected1)) or equal(Xor.Right(expected2)))
+    path.getPathTo(destination) must (equal(Right(expected1)) or equal(Right(expected2)))
 
   private def newBFS(root: Int, numberOfVertices: Int): PathFinder =
     newBFS(root, newGraph(numberOfVertices))

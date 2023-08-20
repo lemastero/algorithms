@@ -95,5 +95,4 @@ class RWayTrieSpec extends BaseSpec {
       trie.get("Foobar") mustBe None
     }
   }
-
 }

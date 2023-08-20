@@ -119,6 +119,5 @@ class TernaryTrieNodeSpec extends BaseSpec {
 
   def assertNodeKey(node: TernaryTrieNode[Integer], key:Char): Unit =
     node.key mustBe Some(key)
-
 }
 

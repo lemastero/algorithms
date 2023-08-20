@@ -74,6 +74,5 @@ case class TernaryTrieNode[Value](
       left = Some(new TernaryTrieNode[Value]())
     left.get
   }
-
 }
 
