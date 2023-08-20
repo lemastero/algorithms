@@ -2,8 +2,7 @@ package lemastero.algorithms.trie
 
 import lemastero.algorithms.trie.PathHolder.Path
 
-/**
-  * R-way Trie
+/** R-way Trie
   *
   * Implementation based on:
   * https://class.coursera.org/algs4partII-006/lecture/34
@@ -18,7 +17,8 @@ private class TrieNode[Value >: Null] {
 
   override def toString: String = {
     val result = new StringBuilder("(")
-      .append(value).append(" [")
+      .append(value)
+      .append(" [")
 
     for (i <- children.indices)
       if (Option(children(i)).isDefined)
@@ -33,16 +33,21 @@ class RWayTrie[Value >: Null] extends StringSymbolTable[Value] {
 
   private[trie] var root: TrieNode[Value] = new TrieNode[Value]()
 
-  override def put(stringPath: String, newValue: Value):Unit = {
-    def putValue(currentChild: Option[TrieNode[Value]], currentIndex: Int): TrieNode[Value] = {
+  override def put(stringPath: String, newValue: Value): Unit = {
+    def putValue(
+        currentChild: Option[TrieNode[Value]],
+        currentIndex: Int
+    ): TrieNode[Value] = {
       val currentChildToVisit = currentChild.getOrElse(new TrieNode[Value]())
       if (stringPath.isEnd(currentIndex)) {
         currentChildToVisit.value = Option(newValue)
         currentChildToVisit
       } else {
         val index = stringPath.pick(currentIndex)
-        currentChildToVisit.children(index) =
-          putValue(Option(currentChildToVisit.children(index)), currentIndex + 1)
+        currentChildToVisit.children(index) = putValue(
+          Option(currentChildToVisit.children(index)),
+          currentIndex + 1
+        )
         currentChildToVisit
       }
     }
@@ -50,14 +55,16 @@ class RWayTrie[Value >: Null] extends StringSymbolTable[Value] {
     root = putValue(Option(root), 0)
   }
 
-  override def get(key:String): Option[Value] = {
+  override def get(key: String): Option[Value] = {
 
-    def getNode(currentChild:Option[TrieNode[Value]], step:Int): Option[TrieNode[Value]] =
-      currentChild.flatMap(
-         child =>
-           if (key.isEnd(step)) Option(child)
-           else
-             getNode(Option(child.children(key.pick(step))), step + 1)
+    def getNode(
+        currentChild: Option[TrieNode[Value]],
+        step: Int
+    ): Option[TrieNode[Value]] =
+      currentChild.flatMap(child =>
+        if (key.isEnd(step)) Option(child)
+        else
+          getNode(Option(child.children(key.pick(step))), step + 1)
       )
 
     val foundNode = getNode(Option(root), 0)

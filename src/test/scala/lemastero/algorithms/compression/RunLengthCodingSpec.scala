@@ -4,7 +4,7 @@ import lemastero.algorithms.BaseSpec
 
 class RunLengthCodingSpec extends BaseSpec {
 
-  def createSequence(setElements:Int*): Iterator[Int] =
+  def createSequence(setElements: Int*): Iterator[Int] =
     setElements.iterator
 
   val codec = new RunLengthCoding()
@@ -19,19 +19,19 @@ class RunLengthCodingSpec extends BaseSpec {
     }
 
     it("handle multiple 1 as input") {
-      assertCompress(createSequence(1,1,1), 3)
+      assertCompress(createSequence(1, 1, 1), 3)
     }
 
     it("handle sequence of 1s 0s") {
-      assertCompress(createSequence(1,1,0), 2,1)
+      assertCompress(createSequence(1, 1, 0), 2, 1)
     }
 
     it("handle sequence of 1s 0s 1s") {
-      assertCompress(createSequence(1,1,0,1,1,1), 2,1,3)
+      assertCompress(createSequence(1, 1, 0, 1, 1, 1), 2, 1, 3)
     }
 
     it("handle sequence of 1s 0s 1s 0s") {
-      assertCompress(createSequence(1,1,0,1,1,1,0,0), 2,1,3,2)
+      assertCompress(createSequence(1, 1, 0, 1, 1, 1, 0, 0), 2, 1, 3, 2)
     }
 
     it("handle sequence of 0s") {
@@ -39,17 +39,17 @@ class RunLengthCodingSpec extends BaseSpec {
     }
   }
 
-  def assertCompress(input: Iterator[Int], array:Int*) = {
+  def assertCompress(input: Iterator[Int], array: Int*) = {
     val archived = codec.compress(input)
     assertOutputEquals(archived, array.toList)
   }
 
-  def assertDecompress(input: Iterator[Int], array:Int*) = {
+  def assertDecompress(input: Iterator[Int], array: Int*) = {
     val archived = codec.decompress(input)
     assertOutputEquals(archived, array.toList)
   }
 
-  def assertOutputEquals(archive:List[Int], expected:List[Int]) =
+  def assertOutputEquals(archive: List[Int], expected: List[Int]) =
     archive mustBe expected
 
   describe("decompress") {

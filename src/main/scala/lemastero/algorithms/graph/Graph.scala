@@ -5,7 +5,7 @@ object Graph {
 }
 
 trait Graph {
-  def adjacentVertices(vertex:Int): List[Int]
+  def adjacentVertices(vertex: Int): List[Int]
   def numberOfVertices: Int
   def numberOfEdges: Int
 }

@@ -11,5 +11,3 @@ class MiddleSquareSpec extends BaseSpec {
     MiddleSquare(1111).nextInt._1.nextInt._2 mustBe 4896
   }
 }
-
-

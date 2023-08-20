@@ -17,7 +17,7 @@ class AdjacencyMatrixGraphSpec extends BaseSpec {
     }
 
     it("has no edges for new graph") {
-      newGraph(3).numberOfEdges mustBe  0
+      newGraph(3).numberOfEdges mustBe 0
     }
 
     it("returns 1 when there was two vertices connected") {
@@ -41,7 +41,7 @@ class AdjacencyMatrixGraphSpec extends BaseSpec {
     }
 
     it("returns other end of edge when one is added") {
-      val graph = newGraph(3, (0,1))
+      val graph = newGraph(3, (0, 1))
 
       graph.adjacentVertices(1).size mustBe 1
       graph.adjacentVertices(1).contains(0) mustBe true
@@ -51,7 +51,7 @@ class AdjacencyMatrixGraphSpec extends BaseSpec {
     }
 
     it("returns both added edges") {
-      val graph = newGraph(3, (0,1), (0,2))
+      val graph = newGraph(3, (0, 1), (0, 2))
 
       graph.adjacentVertices(0).size mustBe 2
       graph.adjacentVertices(0).contains(1) mustBe true

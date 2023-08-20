@@ -6,19 +6,23 @@ import lemastero.algorithms.graph.Graph
 import org.scalatest.funspec.AnyFunSpec
 import org.scalatest.matchers.must.Matchers
 
-class BreadthFirstSearchSpec
-  extends AnyFunSpec
-    with Matchers {
+class BreadthFirstSearchSpec extends AnyFunSpec with Matchers {
 
   describe("factory method") {
 
-    it("returns PathFromEmptyGraph exception when try to construct from empty Graph") {
+    it(
+      "returns PathFromEmptyGraph exception when try to construct from empty Graph"
+    ) {
       newBFSRaw(42, 0) mustBe Validated.Invalid(PathFromEmptyGraph)
     }
 
-    it("returns PathFromNotExistingVertex exception when try to construct from not existing vertex") {
+    it(
+      "returns PathFromNotExistingVertex exception when try to construct from not existing vertex"
+    ) {
       newBFSRaw(1, 1) mustBe Validated.Invalid(PathFromNotExistingVertex(1, 1))
-      newBFSRaw(42, 1) mustBe Validated.Invalid(PathFromNotExistingVertex(42, 1))
+      newBFSRaw(42, 1) mustBe Validated.Invalid(
+        PathFromNotExistingVertex(42, 1)
+      )
     }
   }
 
@@ -58,7 +62,9 @@ class BreadthFirstSearchSpec
       assertPathTo(path, 1, List.empty[Int])
     }
 
-    it("getPathTo returns root and argument when root is adjacent to argument") {
+    it(
+      "getPathTo returns root and argument when root is adjacent to argument"
+    ) {
       val graph = newGraph(2, (0, 1))
       val path = newBFS(0, graph)
       assertPathTo(path, 1, List(0, 1))
@@ -72,26 +78,30 @@ class BreadthFirstSearchSpec
 
   describe("DepthFirstSearch for complex graph") {
 
-    it("existsPathTo returns true when there is obvious edge between 3 elements") {
-      val graph = newGraph(3, (0,1), (1,2) )
+    it(
+      "existsPathTo returns true when there is obvious edge between 3 elements"
+    ) {
+      val graph = newGraph(3, (0, 1), (1, 2))
       val path = newBFS(0, graph)
       assertExistsPathTo(path, 2)
     }
 
     it("getPathTo returns true when there is obvious edge between 3 elements") {
-      val graph = newGraph(3, (0,1), (1,2) )
+      val graph = newGraph(3, (0, 1), (1, 2))
       val path = newBFS(0, graph)
       assertPathTo(path, 2, List(0, 1, 2))
     }
 
     it("getPathTo returns proper path when there is edge between 3 elements") {
-      val graph = newGraph(3, (1, 2), (1, 0) )
+      val graph = newGraph(3, (1, 2), (1, 0))
       val path = newBFS(0, graph)
       assertPathTo(path, 2, List(0, 1, 2))
     }
 
-    it("getPathTo returns empty list when no edge between given object and root") {
-      val graph = newGraph(3, (1,2))
+    it(
+      "getPathTo returns empty list when no edge between given object and root"
+    ) {
+      val graph = newGraph(3, (1, 2))
       val path = newBFS(0, graph)
       assertPathTo(path, 2, List[Int]())
     }
@@ -102,10 +112,7 @@ class BreadthFirstSearchSpec
          |            |
          +- 2 --------+
        */
-      val graph = newGraph(13,
-        (0, 1), (0, 2),
-        (1, 3),
-        (3, 4), (2, 4) )
+      val graph = newGraph(13, (0, 1), (0, 2), (1, 3), (3, 4), (2, 4))
 
       val path = newBFS(0, graph)
 
@@ -115,14 +122,23 @@ class BreadthFirstSearchSpec
     it("getPathTo properly recognize complex graph") {
       val path = newBFS(
         0,
-        newGraph(13,
-          (0, 6), (0, 2), (0, 1), (0, 5),
+        newGraph(
+          13,
+          (0, 6),
+          (0, 2),
+          (0, 1),
+          (0, 5),
           (6, 4),
-          (4, 3), (4, 5),
+          (4, 3),
+          (4, 5),
           (3, 5),
           (7, 8),
-          (9, 10), (9, 12), (9, 11),
-          (11, 12) ))
+          (9, 10),
+          (9, 12),
+          (9, 11),
+          (11, 12)
+        )
+      )
 
       assertExistsPathTo(path, 6, 2, 1, 4, 3, 5)
       assertNotExistsPathTo(path, 7, 8, 9, 10, 11, 12)
@@ -134,11 +150,17 @@ class BreadthFirstSearchSpec
     }
 
     it("getPathTo properly recognize complex graph 2") {
-      val graph = newGraph(13,
-        (0, 2), (0, 1), (0, 5),
-        (2, 4), (2, 3), (2, 1),
+      val graph = newGraph(
+        13,
+        (0, 2),
+        (0, 1),
+        (0, 5),
+        (2, 4),
+        (2, 3),
+        (2, 1),
         (4, 3),
-        (3, 5) )
+        (3, 5)
+      )
 
       val path = newBFS(0, graph)
 
@@ -152,22 +174,31 @@ class BreadthFirstSearchSpec
     }
   }
 
-  private def assertNotExistsPathTo(path: PathFinder, destinations: Int*): Unit =
-    destinations.foreach( dest =>
-      path.existsPathTo(dest) mustBe Right(false)
-    )
+  private def assertNotExistsPathTo(
+      path: PathFinder,
+      destinations: Int*
+  ): Unit =
+    destinations.foreach(dest => path.existsPathTo(dest) mustBe Right(false))
 
   private def assertExistsPathTo(path: PathFinder, destinations: Int*): Unit =
-    destinations.foreach(dest =>
-      path.existsPathTo(dest) mustBe Right(true)
-    )
+    destinations.foreach(dest => path.existsPathTo(dest) mustBe Right(true))
 
-  private def assertPathTo(path: PathFinder, destination: Int, expected: List[Int]): Unit =
+  private def assertPathTo(
+      path: PathFinder,
+      destination: Int,
+      expected: List[Int]
+  ): Unit =
     path.getPathTo(destination) mustBe Right(expected)
 
-  private def assertPathTo(path: PathFinder, destination: Int,
-                           expected1: List[Int], expected2: List[Int]): Unit =
-    path.getPathTo(destination) must (equal(Right(expected1)) or equal(Right(expected2)))
+  private def assertPathTo(
+      path: PathFinder,
+      destination: Int,
+      expected1: List[Int],
+      expected2: List[Int]
+  ): Unit =
+    path.getPathTo(destination) must (equal(Right(expected1)) or equal(
+      Right(expected2)
+    ))
 
   private def newBFS(root: Int, numberOfVertices: Int): PathFinder =
     newBFS(root, newGraph(numberOfVertices))
@@ -175,9 +206,15 @@ class BreadthFirstSearchSpec
   private def newBFS(root: Int, graph: Graph): PathFinder =
     BreadthFirstSearch(graph, root).getOrElse(null)
 
-  private def newBFSRaw(root: Int, numberOfVertices: Int): Validated[GraphCreateError, BreadthFirstSearch] =
+  private def newBFSRaw(
+      root: Int,
+      numberOfVertices: Int
+  ): Validated[GraphCreateError, BreadthFirstSearch] =
     newBFSRaw(root, newGraph(numberOfVertices))
 
-  private def newBFSRaw(root: Int, graph: Graph): Validated[GraphCreateError, BreadthFirstSearch] =
+  private def newBFSRaw(
+      root: Int,
+      graph: Graph
+  ): Validated[GraphCreateError, BreadthFirstSearch] =
     BreadthFirstSearch(graph, root)
 }
