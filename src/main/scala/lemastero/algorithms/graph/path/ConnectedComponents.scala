@@ -37,8 +37,8 @@ case class ConnectedComponents(graph: Graph) {
     graph
       .adjacentVertices(vertex)
       .filter(componentsId(_).isEmpty)
-      .foreach(notVisited => {
+      .foreach { notVisited =>
         componentsId(notVisited) = Some(componentId)
         markAdjacentVertices(notVisited, componentId)
-      })
+      }
 }

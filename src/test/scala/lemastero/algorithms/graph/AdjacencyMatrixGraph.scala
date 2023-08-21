@@ -39,7 +39,7 @@ class AdjacencyMatrixGraph(adjacent: VerticesEdges) extends Graph {
 
   override def adjacentVertices(vertex: Int): List[Int] =
     adjacent(vertex).indices
-      .filter(adjacent(vertex)(_))
+      .filter(adjacent(vertex))
       .toList
 
   override def numberOfEdges: Int =
