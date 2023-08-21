@@ -1,16 +1,15 @@
 package lemastero.algorithms
 
 // https://softwarefoundations.cis.upenn.edu/current/vfa-current/Trie.html
+// replace array[Integer.MAX_VALUE * 2] with map
 object Collisions {
-  val Max = Integer.MAX_VALUE;
-  
   def collisions(xs : Seq[Int]): Int = {
     var collisions = 0;
-    val a: Array[Int] = Array.fill(Max)(0);
+    var a: Map[Int, Boolean] = Map()
     xs.foreach{ i =>
-      if(a(i) != 0)
+      if(a.contains(i))
         collisions += 1;
-      a(i)=1;
+      a = a + (i -> true)
     }
     collisions;
   }
