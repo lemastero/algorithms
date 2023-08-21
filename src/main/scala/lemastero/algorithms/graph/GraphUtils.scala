@@ -21,14 +21,14 @@ object GraphUtils {
       graph
         .adjacentVertices(root)
         .filterNot(colors(_).contains(color.other))
-        .foreach(v => {
+        .foreach { v =>
           if (colors(v).contains(color))
             return false
           else {
             colors(v) = Some(color.other)
             colorVertex(v, color)
           }
-        })
+        }
       true
     }
 

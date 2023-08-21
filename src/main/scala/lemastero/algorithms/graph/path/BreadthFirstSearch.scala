@@ -8,13 +8,12 @@ object BreadthFirstSearch {
   def apply(
       graph: Graph,
       root: Int
-  ): Validated[GraphCreateError, BreadthFirstSearch] = {
+  ): Validated[GraphCreateError, BreadthFirstSearch] =
     if (graph.numberOfVertices == 0)
       Validated.Invalid(PathFromEmptyGraph)
     else if (root >= graph.numberOfVertices)
       Validated.Invalid(PathFromNotExistingVertex(root, graph.numberOfVertices))
     else Validated.Valid(new BreadthFirstSearch(graph, root))
-  }
 }
 
 /** Breadth First Search (BFS) algorithm.
@@ -49,12 +48,12 @@ class BreadthFirstSearch(graph: Graph, root: Int) extends PathFinder {
         case None       => List()
       }
 
-  private def initialize() {
+  private def initialize(): Unit = {
     previousVertex(root) = Some(root)
     markPreviousVertices(List(root))
   }
 
-  private def markPreviousVertices(elementsToProcess: List[Int]) {
+  private def markPreviousVertices(elementsToProcess: List[Int]): Unit =
     if (elementsToProcess.nonEmpty) {
       val toProcess = graph
         .adjacentVertices(elementsToProcess.head)
@@ -62,5 +61,4 @@ class BreadthFirstSearch(graph: Graph, root: Int) extends PathFinder {
       toProcess.foreach(previousVertex(_) = Some(elementsToProcess.head))
       markPreviousVertices(elementsToProcess.tail ++ toProcess)
     }
-  }
 }

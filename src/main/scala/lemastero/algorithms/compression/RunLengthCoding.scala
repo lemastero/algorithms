@@ -8,7 +8,7 @@ class RunLengthCoding {
     val result = mutable.ListBuffer[Int]()
     var value = 1
     while (ints.hasNext) {
-      for (i <- 1 to ints.next())
+      for (_ <- 1 to ints.next())
         result.append(value)
       value = if (value == 1) 0 else 1
     }
@@ -23,7 +23,7 @@ class RunLengthCoding {
     val result = mutable.ListBuffer[Int]()
     var setCount: Int = 0
     var unsetCount: Int = 0
-    while (uncompressed.hasNext) {
+    while (uncompressed.hasNext)
       if (uncompressed.next() == 1) {
         setCount = setCount + 1
         if (unsetCount > 0) {
@@ -37,7 +37,6 @@ class RunLengthCoding {
         }
         unsetCount = unsetCount + 1
       }
-    }
     if (setCount > 0 || result.isEmpty) {
       result.append(setCount)
       setCount = 0
